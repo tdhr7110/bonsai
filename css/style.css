@@ -1,12 +1,10 @@
 :root {
-  --color-bg: #f3ede0;
-  --color-bg-soft: #ece3d1;
-  --color-ink: #2b2823;
-  --color-ink-soft: #5a5449;
-  --color-line: #d8cdb4;
-  --color-accent: #8c2f26;
-  --color-green: #3a5a40;
-  --color-panel: #faf6ec;
+  --color-bg: #0a0a0a;
+  --color-bg-soft: #141414;
+  --color-ink: #f0efe9;
+  --color-ink-soft: #8f8d85;
+  --color-line: rgba(240, 239, 233, 0.18);
+  --color-panel: #121212;
   --font-serif: 'Hiragino Mincho ProN', 'Yu Mincho', '游明朝', 'Noto Serif JP', 'Georgia', serif;
 }
 
@@ -55,7 +53,7 @@ input {
   align-items: center;
   justify-content: center;
   gap: 24px;
-  background: radial-gradient(ellipse at center, var(--color-bg-soft) 0%, var(--color-bg) 70%);
+  background: radial-gradient(ellipse at center, var(--color-bg-soft) 0%, var(--color-bg) 75%);
 }
 
 .title-logo {
@@ -116,13 +114,14 @@ input {
 }
 
 .btn-primary {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+  background: var(--color-ink);
+  color: var(--color-bg);
+  border-color: var(--color-ink);
 }
 
 .btn-primary:hover {
-  background: var(--color-accent);
-  color: var(--color-panel);
+  background: transparent;
+  color: var(--color-ink);
 }
 
 .btn-ghost {
@@ -174,8 +173,8 @@ input {
   top: 6px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(43, 40, 35, 0.85);
-  color: var(--color-panel);
+  background: var(--color-ink);
+  color: var(--color-bg);
   padding: 6px 14px;
   border-radius: 3px;
   font-size: 0.8rem;
@@ -240,7 +239,7 @@ input {
   bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
-  box-shadow: inset 0 -4px 6px rgba(0, 0, 0, 0.25), 0 2px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 -4px 6px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(240, 239, 233, 0.1);
 }
 
 .pot-oval {
@@ -300,8 +299,9 @@ input {
 }
 
 .branch.selected {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
+  outline: 2px dashed var(--color-ink);
+  outline-offset: 3px;
+  box-shadow: 0 0 8px rgba(240, 239, 233, 0.5);
 }
 
 .leaf-anchor {
@@ -340,7 +340,7 @@ input {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(20, 18, 14, 0.45);
+  background: rgba(0, 0, 0, 0.75);
   display: none;
   align-items: center;
   justify-content: center;
@@ -357,7 +357,7 @@ input {
   padding: 22px 26px;
   max-width: 300px;
   text-align: center;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
 }
 
 .modal p {
@@ -475,7 +475,7 @@ input {
 
 .naming-area input:focus {
   outline: none;
-  border-color: var(--color-accent);
+  border-color: var(--color-ink);
 }
 
 /* ---------- Gallery screen ---------- */
@@ -528,7 +528,7 @@ input {
 
 .gallery-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  border-color: var(--color-ink);
 }
 
 .gallery-card-stage {
