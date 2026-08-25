@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>盆栽 - BONSAI</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div id="screen-title" class="screen active">
+  <div class="title-logo">盆栽</div>
+  <div class="title-sub">B O N S A I</div>
+  <div class="title-stage-wrap"><div id="title-stage" class="bonsai-stage mini"></div></div>
+  <div class="title-menu" id="title-menu">
+    <button class="btn btn-primary" id="btn-start">育てる</button>
+    <button class="btn" id="btn-gallery-from-title">盆栽図鑑</button>
+  </div>
+  <div class="species-picker" id="species-picker">
+    <button class="btn" data-species="kuromatsu">黒松</button>
+    <button class="btn" data-species="kaede">楓</button>
+    <button class="btn" data-species="ume">梅</button>
+    <button class="btn btn-ghost" id="btn-species-cancel">戻る</button>
+  </div>
+</div>
+
+<div id="screen-grow" class="screen">
+  <div class="grow-header">
+    <span class="species-name" id="grow-species"></span>
+    <span class="age-label" id="grow-age"></span>
+  </div>
+  <div class="stage-wrap">
+    <div id="grow-stage" class="bonsai-stage"></div>
+    <div class="toast" id="grow-toast"></div>
+  </div>
+  <div class="bend-controls" id="bend-controls">
+    <button class="btn" id="btn-bend-left">← 左へ曲げる</button>
+    <button class="btn" id="btn-bend-right">右へ曲げる →</button>
+  </div>
+  <div class="toolbar">
+    <button class="btn" id="mode-prune">剪定</button>
+    <button class="btn" id="mode-bend">曲げる</button>
+    <button class="btn" id="mode-leaf">葉を整える</button>
+    <button class="btn" id="btn-advance">時を進める</button>
+    <button class="btn btn-primary" id="btn-complete">完成</button>
+  </div>
+</div>
+
+<div id="screen-council" class="screen">
+  <div class="council-title">盆栽評議会</div>
+  <div class="council-stage-wrap"><div id="council-stage" class="bonsai-stage"></div></div>
+  <div class="reviewers" id="reviewers"></div>
+  <div class="council-final" id="council-final"></div>
+  <div class="naming-area" id="naming-area">
+    <label for="bonsai-name-input">この盆栽に名前を付けてください</label>
+    <input id="bonsai-name-input" type="text" placeholder="（名前なしでも構いません）" maxlength="20" />
+    <button class="btn btn-primary" id="btn-save-gallery">図鑑に保存する</button>
+  </div>
+</div>
+
+<div id="screen-gallery" class="screen">
+  <div class="gallery-list-wrap" id="gallery-list-wrap">
+    <div class="gallery-header">
+      <h2>盆栽図鑑</h2>
+      <button class="btn btn-ghost" id="btn-back-title">戻る</button>
+    </div>
+    <div class="gallery-list" id="gallery-list"></div>
+  </div>
+  <div class="gallery-detail" id="gallery-detail">
+    <div class="gallery-header">
+      <button class="btn btn-ghost" id="btn-detail-back">← 図鑑へ戻る</button>
+      <span></span>
+    </div>
+    <div class="detail-stage-wrap"><div id="detail-stage" class="bonsai-stage"></div></div>
+    <div class="detail-meta" id="detail-meta"></div>
+    <div class="reviewers" id="detail-reviewers"></div>
+    <div class="council-final visible" id="detail-final"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <p id="modal-text"></p>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="modal-confirm"></button>
+      <button class="btn btn-ghost" id="modal-cancel">キャンセル</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
