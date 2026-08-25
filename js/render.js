@@ -70,7 +70,7 @@ function renderTrunkSegment(segments, index, parentEl, branchesBySeg, leavesByBr
   const segEl = el('div', 'trunk-segment');
   segEl.style.height = `${seg.length}px`;
   segEl.style.width = `${seg.thickness}px`;
-  segEl.style.background = `linear-gradient(90deg, ${ctx.species.trunkColorDark}, ${ctx.species.trunkColor} 55%, ${ctx.species.trunkColorDark})`;
+  segEl.style.background = ctx.species.trunkColor;
   segEl.style.transform = `translateX(-50%) rotate(${seg.angle}deg)`;
   parentEl.appendChild(segEl);
 
@@ -101,7 +101,7 @@ export function renderBonsai(container, bonsai, options = {}) {
   const potEl = el('div', `pot pot-${bonsai.pot.type}`);
   potEl.style.width = `${bonsai.pot.width}px`;
   potEl.style.height = `${bonsai.pot.height}px`;
-  potEl.style.background = bonsai.pot.color;
+  potEl.style.borderColor = bonsai.pot.color;
   container.appendChild(potEl);
 
   const trunkRoot = el('div', 'trunk-root');

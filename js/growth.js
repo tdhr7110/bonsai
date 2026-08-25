@@ -8,7 +8,7 @@ function createSimpleBranch(species) {
     id: uid('br'),
     angle: round1(side * rand(minA, maxA)),
     length: round1(rand(28, 45)),
-    thickness: round1(rand(4, 7)),
+    thickness: round1(rand(2, 3.5)),
     age: 0,
     alive: true,
     children: [],

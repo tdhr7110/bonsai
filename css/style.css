@@ -239,7 +239,8 @@ input {
   bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
-  box-shadow: inset 0 -4px 6px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(240, 239, 233, 0.1);
+  background: transparent;
+  border: 2px solid;
 }
 
 .pot-oval {
@@ -247,7 +248,7 @@ input {
 }
 
 .pot-rect {
-  border-radius: 3px / 10px;
+  border-radius: 2px / 6px;
 }
 
 .trunk-root {
@@ -262,7 +263,7 @@ input {
   left: 50%;
   bottom: 100%;
   transform-origin: 50% 100%;
-  border-radius: 40% 40% 8% 8% / 55% 55% 8% 8%;
+  border-radius: 2px;
   transition: height 0.6s ease, transform 0.6s ease, width 0.6s ease;
 }
 
@@ -286,7 +287,7 @@ input {
   left: 50%;
   bottom: 0;
   transform-origin: 50% 100%;
-  border-radius: 50% 50% 4px 4px / 60% 60% 4px 4px;
+  border-radius: 1px;
   transition: height 0.6s ease, transform 0.6s ease;
 }
 
@@ -325,7 +326,7 @@ input {
 
 .leaf {
   position: absolute;
-  border-radius: 50% 50% 50% 0;
+  border-radius: 50%;
   transform-origin: center;
   animation: leaf-sway 4.5s ease-in-out infinite;
   transition: opacity 0.5s ease;

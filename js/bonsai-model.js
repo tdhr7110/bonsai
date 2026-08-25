@@ -44,7 +44,7 @@ const POT_TYPES = ['oval', 'rect'];
 function createTrunk() {
   const segCount = randInt(3, 5);
   const segments = [];
-  let thickness = rand(15, 21);
+  let thickness = rand(7, 11);
   const leanBias = pick([-1, -1, 0, 0, 0, 1, 1]) * rand(4, 11);
   for (let i = 0; i < segCount; i += 1) {
     const length = rand(30, 50) * (1 - i * 0.06);
@@ -73,7 +73,7 @@ function createBranch(species, depth = 0) {
     id: uid('br'),
     angle: round1(angle),
     length: round1(length),
-    thickness: round1(rand(4, 8) * (depth === 0 ? 1 : 0.6)),
+    thickness: round1(rand(2, 4) * (depth === 0 ? 1 : 0.6)),
     age: 0,
     alive: true,
     children: [],
