@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>盆栽 - BONSAI</title>
 <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -11,6 +11,7 @@
 <div id="screen-title" class="screen active">
   <div class="title-logo">盆栽</div>
   <div class="title-sub">B O N S A I</div>
+  <p class="title-caption">ひと枝ずつ、自分だけの景色に。</p>
   <div class="title-stage-wrap"><div id="title-stage" class="bonsai-stage mini"></div></div>
   <div class="title-menu" id="title-menu">
     <button class="btn btn-primary" id="btn-start">育てる</button>
@@ -31,7 +32,13 @@
   </div>
   <div class="stage-wrap">
     <div id="grow-stage" class="bonsai-stage"></div>
-    <div class="toast" id="grow-toast"></div>
+    <div class="toast" id="grow-toast" role="status"></div>
+  </div>
+  <p class="grow-hint" id="grow-hint" aria-live="polite"></p>
+  <div class="prune-controls" id="prune-controls" hidden>
+    <span id="prune-summary"></span>
+    <button class="btn" id="btn-prune-confirm">選んだ枝を切る</button>
+    <button class="btn btn-ghost" id="btn-selection-cancel">選択を外す</button>
   </div>
   <div class="bend-controls" id="bend-controls">
     <button class="btn" id="btn-bend-left">← 左へ曲げる</button>
@@ -42,6 +49,7 @@
     <button class="btn" id="mode-bend">曲げる</button>
     <button class="btn" id="mode-leaf">葉を整える</button>
     <button class="btn" id="btn-advance">時を進める</button>
+    <button class="btn btn-ghost" id="btn-undo" disabled>1手戻す</button>
     <button class="btn btn-primary" id="btn-complete">完成</button>
   </div>
 </div>

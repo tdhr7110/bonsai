@@ -230,8 +230,6 @@ input {
 .bonsai-stage.mini {
   max-width: 100%;
   max-height: 100%;
-  transform: scale(0.3);
-  transform-origin: bottom center;
 }
 
 .pot {
@@ -595,4 +593,87 @@ input {
   .reviewer-card {
     width: 90%;
   }
+}
+
+/* A quiet workbench. All textures are CSS; no image or font downloads. */
+.screen { height: 100dvh; }
+#screen-title { overflow-y: auto; gap: 18px; }
+.title-caption { margin: 0; color: #a8ad98; font-size: .8rem; letter-spacing: .12em; }
+#screen-grow { max-width: 900px; margin: 0 auto; overflow-y: auto; }
+.stage-wrap {
+  min-height: 180px;
+  margin-top: 16px;
+  border: 1px solid rgba(177, 187, 151, .12);
+  border-radius: 50% 50% 8px 8px / 12% 12% 8px 8px;
+  background: radial-gradient(ellipse at 50% 70%, #20251d 0%, #121610 45%, #0d100d 80%);
+  overflow: hidden;
+}
+.stage-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: 12px;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #68735a, transparent);
+  pointer-events: none;
+}
+.bonsai-stage { max-width: 640px; max-height: none; }
+.stage-wrap > .bonsai-stage { height: 100%; position: absolute; bottom: 0; }
+.bonsai-art {
+  position: absolute;
+  width: 340px;
+  height: 320px;
+  left: 50%;
+  bottom: 14px;
+  transform-origin: 50% 100%;
+  transform: translateX(-50%);
+}
+.trunk-segment, .branch {
+  background-image: linear-gradient(90deg, rgba(0,0,0,.35), transparent 45%, rgba(255,255,255,.15) 65%, rgba(0,0,0,.28)) !important;
+  border-radius: 45% 40% 2px 2px;
+}
+.child-tip { position: absolute; left: 50%; bottom: 100%; width: 0; height: 0; }
+.pot {
+  background: linear-gradient(175deg, #555447 0%, #2e3029 25%, #161c16 80%);
+  box-shadow: inset 0 3px 0 rgba(180,185,141,.25), 0 10px 15px rgba(0,0,0,.5);
+}
+.pot::before {
+  content: ''; position: absolute; left: 6%; right: 6%; top: 2px; height: 22%;
+  border-radius: 50%; background: #39412c; box-shadow: inset 0 2px 3px #151b11;
+}
+.leaf { box-shadow: inset 1px 1px 1px rgba(255,255,255,.2); pointer-events: none; }
+[data-species-key="kuromatsu"] .leaf { border-radius: 80% 0; }
+[data-species-key="kaede"] .leaf { border-radius: 2px 70% 2px 70%; }
+[data-species-key="ume"] .leaf { box-shadow: inset 0 0 2px #b58c83; }
+.branch-hit, .leaf-hit {
+  position: absolute; left: 50%; top: 40%; width: 28px; height: 30px;
+  transform: translate(-50%, -50%); border: 1px dashed rgba(216,226,180,.6);
+  background: rgba(158,180,133,.08); border-radius: 50%; padding: 0;
+  pointer-events: auto; z-index: 3; touch-action: manipulation;
+}
+.leaf-hit { width: 38px; height: 38px; left: 14px; top: 8px; }
+.branch-hit:hover, .leaf-hit:hover { background: rgba(200,220,160,.25); }
+.branch.prune-preview { outline: 2px dashed #edae77; outline-offset: 3px; }
+.prune-preview, .prune-preview .branch, .prune-preview .leaf {
+  background-color: #d49365 !important;
+}
+.grow-hint { min-height: 2.8em; margin: 12px 0 0; text-align: center; font-size: .8rem; line-height: 1.7; color: #bbc4a9; }
+.prune-controls { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; padding: 8px 0; }
+.prune-controls[hidden] { display: none; }
+.prune-controls span { font-size: .78rem; color: #edb58c; }
+.prune-controls .btn { font-size: .8rem; padding: 10px; }
+.toolbar { padding-bottom: max(10px, env(safe-area-inset-bottom)); }
+.btn { touch-action: manipulation; }
+.btn:disabled { opacity: .32; cursor: default; background: var(--color-panel); color: var(--color-ink-soft); transform: none; }
+button:focus-visible { outline: 2px solid #d5dcae; outline-offset: 4px; }
+.toast { width: max-content; max-width: 90%; text-align: center; }
+.gallery-card-stage { overflow: hidden; background: radial-gradient(ellipse at bottom, #20251d, transparent); }
+@media (max-width: 480px) {
+  .toolbar .btn { flex: 1 1 29%; }
+  .branch-hit { width: 32px; height: 32px; }
+  .title-stage-wrap { height: 24vh; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
 }

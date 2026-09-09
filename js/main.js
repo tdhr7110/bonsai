@@ -4,7 +4,7 @@ import { advanceTime } from './growth.js';
 import { pruneBranch, bendBranch, thinLeaves } from './actions.js';
 import { generateCouncilReport } from './council.js';
 import { loadAll, saveRecord } from './storage.js';
-import { formatDate, pick } from './utils.js';
+import { formatDate, pick, findBranch, collectBranchIds } from './utils.js';
 
 const screens = {};
 document.querySelectorAll('.screen').forEach((s) => {
@@ -23,6 +23,12 @@ let mode = null;
 let selectedBranchId = null;
 let pendingCouncil = null;
 let toastTimer = null;
+const undoStack = [];
+
+function rememberStep() {
+  undoStack.push(structuredClone(currentBonsai));
+  if (undoStack.length > 20) undoStack.shift();
+}
 
 /* ---------- Modal ---------- */
 const modalOverlay = $('modal-overlay');
@@ -82,6 +88,7 @@ $('btn-gallery-from-title').addEventListener('click', () => {
 /* ---------- Grow screen ---------- */
 function startNewBonsai(speciesKey) {
   currentBonsai = createBonsai(speciesKey);
+  undoStack.length = 0;
   mode = null;
   selectedBranchId = null;
   $('species-picker').classList.remove('open');
@@ -101,15 +108,25 @@ function updateToolbarState() {
   $('mode-bend').classList.toggle('active-mode', mode === 'bend');
   $('mode-leaf').classList.toggle('active-mode', mode === 'leaf');
   $('bend-controls').classList.toggle('open', mode === 'bend' && !!selectedBranchId);
+  $('btn-undo').disabled = undoStack.length === 0;
+  ['prune', 'bend', 'leaf'].forEach((tool) => {
+    $(`mode-${tool}`).setAttribute('aria-pressed', String(mode === tool));
+  });
+  $('prune-controls').hidden = !(mode === 'prune' && selectedBranchId);
+  const hints = {
+    prune: '枝を選ぶと、切れる範囲が橙色になります。確認してから剪定。',
+    bend: '枝を選び、左右のボタンで少しずつ曲げてみましょう。',
+    leaf: '葉のまとまりをタップして、枝の間に余白を作りましょう。',
+  };
+  $('grow-hint').textContent = hints[mode] || '剪定・曲げる・葉を整える。気に入る形になったら「完成」へ。';
 }
 
 function handleSelectBranch(id) {
   if (mode === 'prune') {
-    showConfirm('この枝を剪定しますか？', '剪定する', () => {
-      pruneBranch(currentBonsai, id);
-      selectedBranchId = null;
-      renderGrow();
-    });
+    selectedBranchId = id;
+    const count = collectBranchIds(findBranch(currentBonsai.branches, id)).length;
+    $('prune-summary').textContent = count > 1 ? `子枝を含む${count}本を剪定` : 'この枝を剪定';
+    renderGrow();
   } else if (mode === 'bend') {
     selectedBranchId = id;
     renderGrow();
@@ -118,8 +135,15 @@ function handleSelectBranch(id) {
 
 function handleSelectLeaf(id) {
   if (mode === 'leaf') {
+    const cluster = currentBonsai.leaves.find((leaf) => leaf.id === id);
+    if (!cluster || cluster.density <= 0.1) {
+      showToast('この葉は、十分にすいてあります。');
+      return;
+    }
+    rememberStep();
     thinLeaves(currentBonsai, id);
     renderGrow();
+    showToast('葉をすいて、光が通る余白を。');
   }
 }
 
@@ -148,8 +172,31 @@ $('mode-prune').addEventListener('click', () => setMode('prune'));
 $('mode-bend').addEventListener('click', () => setMode('bend'));
 $('mode-leaf').addEventListener('click', () => setMode('leaf'));
 
+$('btn-prune-confirm').addEventListener('click', () => {
+  if (!selectedBranchId || !findBranch(currentBonsai.branches, selectedBranchId)) return;
+  rememberStep();
+  pruneBranch(currentBonsai, selectedBranchId);
+  selectedBranchId = null;
+  renderGrow();
+  showToast('ひと枝、すっきり。いつでも「1手戻す」で戻せます。');
+});
+
+$('btn-selection-cancel').addEventListener('click', () => {
+  selectedBranchId = null;
+  renderGrow();
+});
+
+$('btn-undo').addEventListener('click', () => {
+  if (!undoStack.length) return;
+  currentBonsai = undoStack.pop();
+  selectedBranchId = null;
+  renderGrow();
+  showToast('ひとつ前の姿に戻しました。');
+});
+
 $('btn-advance').addEventListener('click', () => {
   if (!currentBonsai) return;
+  rememberStep();
   const desc = advanceTime(currentBonsai);
   showToast(desc);
   renderGrow();
@@ -157,6 +204,8 @@ $('btn-advance').addEventListener('click', () => {
 
 $('btn-bend-left').addEventListener('click', () => {
   if (selectedBranchId) {
+    if (findBranch(currentBonsai.branches, selectedBranchId).angle <= -85) return;
+    rememberStep();
     bendBranch(currentBonsai, selectedBranchId, -1);
     renderGrow();
   }
@@ -164,6 +213,8 @@ $('btn-bend-left').addEventListener('click', () => {
 
 $('btn-bend-right').addEventListener('click', () => {
   if (selectedBranchId) {
+    if (findBranch(currentBonsai.branches, selectedBranchId).angle >= 85) return;
+    rememberStep();
     bendBranch(currentBonsai, selectedBranchId, 1);
     renderGrow();
   }
